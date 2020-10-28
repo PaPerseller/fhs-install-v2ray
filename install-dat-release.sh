@@ -15,11 +15,11 @@
 
 # You can modify it to /usr/local/lib/v2ray
 V2RAY="/usr/local/share/v2ray"
-DOWNLOAD_LINK_GEOIP="https://github.com/v2fly/geoip/releases/latest/download/geoip.dat"
-DOWNLOAD_LINK_GEOSITE="https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
+DOWNLOAD_LINK_GEOIP="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat"
+DOWNLOAD_LINK_GEOSITE="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat"
 file_ip='geoip.dat'
-file_dlc='dlc.dat'
 file_site='geosite.dat'
+file_dlc='dlc.dat'
 dir_tmp="$(mktemp -d)"
 
 curl() {
@@ -58,7 +58,7 @@ check_sum() {
 }
 
 install_file() {
-  install -m 644 "${dir_tmp}"/${file_dlc} "${V2RAY}"/${file_site}
+  install -m 644 "${dir_tmp}"/${file_site} "${V2RAY}"/${file_site}
   install -m 644 "${dir_tmp}"/${file_ip} "${V2RAY}"/${file_ip}
   rm -r "${dir_tmp}"
 }
@@ -66,7 +66,7 @@ install_file() {
 main() {
   check_if_running_as_root
   download_files $DOWNLOAD_LINK_GEOIP $file_ip
-  download_files $DOWNLOAD_LINK_GEOSITE $file_dlc
+  download_files $DOWNLOAD_LINK_GEOSITE $file_site
   check_sum
   install_file
 }
